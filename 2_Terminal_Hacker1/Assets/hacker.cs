@@ -5,11 +5,18 @@ using UnityEngine;
 
 public class hacker : MonoBehaviour
 {
+    //Game Configuration Data
+    string[] level1Passwords = {"password1","pass","word"};
+    string[] level2Passwords = {"password2","kink ","thong"};
+    string[] level3Passwords = {"password3","passchart","word"};
+
     //GamseState
     int level;
     enum Screen { MainMenu, Password, Win };
     // Start is called before the first frame update
     Screen currentScreen;
+    string password;
+
     void Start()
     {
         ShowMainMenu();
@@ -37,23 +44,32 @@ public class hacker : MonoBehaviour
         {
             RunMainMenu(input);
         }
+        else if (currentScreen == Screen.Password)
+        {
+            RunCheckAttempt(input);
+        }
     }
+
+
 
     void RunMainMenu(string input)
     {
         if (input == "1")
         {
             level = 1;
+            password = level1Passwords[0];
             StartGame();
         }
         else if (input == "2")
         {
             level = 2;
+            password = level2Passwords[2];
             StartGame();
         }
         else if (input == "3")
         {
             level = 3;
+            password = level2Passwords[1];
             StartGame();
         }
         else if (input == "sexytime")
@@ -73,6 +89,20 @@ public class hacker : MonoBehaviour
         currentScreen = Screen.Password;
         Terminal.WriteLine("You have chose level: " + level);
         Terminal.WriteLine("Please Enter your Password");
+        
+    }
+
+    void RunCheckAttempt(string input)
+    {
+        if (input == password)
+        {
+            currentScreen = Screen.Win;
+            Terminal.WriteLine("Welcome to the Matrix!");
+        }
+        else
+        {
+            Terminal.WriteLine("Denied, Try Again");
+        }
     }
 
 }
